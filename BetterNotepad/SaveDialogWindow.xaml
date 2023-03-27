@@ -1,0 +1,104 @@
+﻿<Window x:Class="BetterNotepad.SaveDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BetterNotepad"
+        mc:Ignorable="d"
+        Title="Window1" Height="150" Width="330" WindowStyle="None">
+    <Window.Resources>
+
+
+
+
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="buttons.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+
+
+    </Window.Resources>
+
+
+
+
+
+
+
+    <!--Title bar button commands-->
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
+    </Window.CommandBindings>
+
+
+    <Border x:Name="MainWindowBorder" BorderBrush="#ee202020" BorderThickness="1" Margin="0,0,0,0">
+        <Grid x:Name="parentContainer" Background="#141414">
+
+            <Grid>
+
+            </Grid>
+
+            <!--Window chrome-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30">
+                <!--App icon-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="10,10,0,0" Name="LogoTextThing" Text="Are you sure?" Foreground="White" FontSize="18"  FontFamily="Bahnschrift SemiBold" HorizontalAlignment="Left">
+
+
+                    </TextBlock>
+
+
+                </StackPanel>
+            </StackPanel>
+
+            <!--Caption buttons-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+
+                <Button Style="{StaticResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True"
+                            Command="{x:Static SystemCommands.CloseWindowCommand}">
+
+
+                    <Button.ToolTip>
+                        <ToolTip Background="Black">
+                            <Grid>
+                                <TextBlock Text="Quit" Foreground="White">
+
+                                </TextBlock>
+                            </Grid>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+
+            <Grid>
+                <TextBlock Foreground="#ffffff" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="Would you like to save your changes?" HorizontalAlignment="Center" Margin="20,-10,20,0" Height="20" FontFamily="Bahnschrift Light" FontSize="16">
+
+                </TextBlock>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                    <Button Width="100" Height="35" Margin="2,2,2,2" Style="{StaticResource ButtonMain2}" Name="ySave">
+                        <TextBlock FontFamily="Bahnschrift Light" Text="Save" Foreground="White" FontSize="15" >
+
+                        </TextBlock>
+                    </Button>
+                    <Button Width="100" Height="35" Margin="2,2,2,2" Style="{StaticResource ButtonMain2}" Name="nSave">
+                        <TextBlock FontFamily="Bahnschrift Light" Text="Don't save" Foreground="White" FontSize="15" >
+
+                        </TextBlock>
+                    </Button>
+                    <Button Width="100" Height="35" Margin="2,2,2,2" Style="{StaticResource ButtonMain2}" Name="ByeByeButtons">
+                        <TextBlock FontFamily="Bahnschrift Light" Text="Cancel" Foreground="White" FontSize="15" >
+
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+

@@ -1,0 +1,470 @@
+﻿<Window x:Class="BetterNotepad.MainNotepad"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BetterNotepad"
+        mc:Ignorable="d"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        Background="Black"
+        Title="Notepad" Height="450" Width="800" Activated="Window_Activated" Loaded="Window_Loaded"  Closing="Window_Closing" MinHeight="116" MouseWheel="Window_MouseWheel">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40">
+
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="buttons.xaml" />
+                <ResourceDictionary Source="ScrollFormat.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+
+
+
+    <Window.ContextMenu>
+        <ContextMenu Foreground="White">
+            <MenuItem Header="Force close" Click="MenuItem_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+
+
+
+
+    <!--Title bar button commands-->
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Maximize" />
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Minimize" />
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
+    </Window.CommandBindings>
+
+
+    <Border x:Name="MainBorder" BorderBrush="#ee464646" BorderThickness="1" Margin="0,0,0,0">
+        <Grid x:Name="parentContainer">
+            <Grid Margin="0,0,0,0" Background="#040404">
+
+            </Grid>
+            <Grid Margin="0,0,200,0">
+
+            </Grid>
+
+            <local:Notebox Language="en" KeyDown="MainText_KeyDown" AcceptsReturn="True" AcceptsTab="True" x:Name="MainText" SpellCheck.IsEnabled="False" Foreground="White" Margin="0,85,0,30" Background="#101010" Padding="10,10,0,10" BorderThickness="0" TextWrapping="WrapWithOverflow"  FontFamily="Segoe UI Semibold" FontSize="18" FontWeight="Normal" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2">
+
+            </local:Notebox>
+
+            <Border VerticalAlignment="Bottom" Height="30" Background="#040404" BorderThickness="0,1,0,0" BorderBrush="#202020" SnapsToDevicePixels="True">
+                <Grid VerticalAlignment="Center" Margin="10,0,0,0">
+                    <TextBlock Text="Ready" Name="wordbar" Foreground="White" FontStyle="Italic">
+
+                    </TextBlock>
+                </Grid>
+            </Border>
+
+
+            <!--Window chrome-->
+            <Border Height="45" Background="Black" VerticalAlignment="Top" BorderBrush="#202020" BorderThickness="0,0,0,1" >
+                <Grid>
+                    <Image Height="25" Margin="15,0,0,0" Width="25" Source="nicon2.ico" HorizontalAlignment="Left">
+
+                    </Image>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,150,0">
+                        <TextBlock TextTrimming="WordEllipsis" Margin="50,0,0,0" Height="19" VerticalAlignment="Center" x:Name="LogoTextThing" Text="Untitled" Foreground="White" FontSize="18"  FontFamily="Bahnschrift SemiBold" HorizontalAlignment="Left"/>
+                        <TextBlock TextTrimming="WordEllipsis" Margin="10,5,0,0" VerticalAlignment="Center" x:Name="FileLabel" Text="" Foreground="#bbbbbb" FontSize="11" FontFamily="Bahnschrift" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+
+
+            <!--Caption buttons-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,3,0">
+
+
+                <Button Style="{StaticResource MinimizeButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True"
+                            Command="{x:Static SystemCommands.MinimizeWindowCommand}">
+                    <Button.ToolTip>
+                        <ToolTip Background="Black">
+                            <Grid>
+                                <TextBlock Text="Minimize" Foreground="White"/>
+                            </Grid>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="RestoreButton" Visibility="Collapsed" Style="{StaticResource RestoreButtonStyle}" 
+                            Command="{x:Static SystemCommands.RestoreWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button.ToolTip>
+                        <ToolTip Background="Black">
+                            <Grid>
+                                <TextBlock Text="Restore" Foreground="White"/>
+                            </Grid>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="MaximizeButton" Visibility="Visible" Style="{StaticResource MaximizeButtonStyle}" 
+                            Command="{x:Static SystemCommands.MaximizeWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button.ToolTip>
+                        <ToolTip Background="Black">
+                            <Grid>
+                                <TextBlock Text="Maximize" Foreground="White"/>
+                            </Grid>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Style="{StaticResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True"
+                            Command="{x:Static SystemCommands.CloseWindowCommand}">
+
+
+                    <Button.ToolTip>
+                        <ToolTip Background="Black">
+                            <Grid>
+                                <TextBlock Text="Quit" Foreground="White"/>
+                            </Grid>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+
+
+            <!--App content-->
+
+            <Border Visibility="Hidden" x:Name="saveprompt1" Height="140" Width="370" Background="Black" BorderBrush="#555555" BorderThickness="1" CornerRadius="6" Panel.ZIndex="58">
+                <Grid>
+                    <TextBlock Foreground="White" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="Would you like to save your changes?" HorizontalAlignment="Center" Margin="20,20,20,0" VerticalAlignment="Top" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                        <Button Background="#222222" Width="110" Height="40" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="sayYes">
+                            <TextBlock FontFamily="Bahnschrift" Text="Save" Foreground="White" FontSize="15" />
+                        </Button>
+                        <Button Background="#222222" Width="120" Height="40" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="sayNo">
+                            <TextBlock FontFamily="Bahnschrift" Text="Don't save" Foreground="White" FontSize="15" />
+                        </Button>
+                        <Button Background="#222222" Width="110" Height="40" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="sayCancel">
+                            <TextBlock FontFamily="Bahnschrift" Text="Cancel" Foreground="White" FontSize="15" />
+                        </Button>
+                    </StackPanel>
+
+
+                </Grid>
+            </Border>
+
+            <Border x:Name="filesaved" Height="30" Width="200" VerticalAlignment="Bottom" Margin="300,0,262,-50" Background="Black" BorderBrush="#222222" BorderThickness="1" CornerRadius="6" Panel.ZIndex="55">
+                <TextBlock x:Name="saveBB" Foreground="White" Text="File saved successfully" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bahnschrift SemiBold" FontSize="15"/>
+            </Border>
+
+            <StackPanel Margin="5,45,0,0" Grid.ColumnSpan="2">
+
+
+
+
+
+
+                <StackPanel HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Orientation="Horizontal" Width="Auto">
+                    <Button ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="newIcon" Click="NewF">
+
+                        <Button.ToolTip >
+
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="New File" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" Foreground="White" FontSize="15" />
+
+                    </Button>
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="openIcon" Click="OpenF">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Open File" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED25;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="saveIcon" Click="SaveF">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Save" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock  FontFamily="Segoe MDL2 Assets" Text="&#xE74E;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="saveAsIcon" Click="SaveFAs">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Save As..." Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock  FontFamily="Segoe MDL2 Assets" Text="&#xE792;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+                    <TextBlock FontSize="13" Margin="8,0,0,0" FontFamily="Bahnschrift " x:Name="fontSize1" Text="Font Size: " Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border SnapsToDevicePixels="True" ToolTipService.InitialShowDelay="300" Width="50" Height="25" Margin="2,2,2,2"  x:Name="text1" BorderThickness="1" Background="#11aaaaaa" CornerRadius="4" BorderBrush="#202020">
+                        <TextBox FontSize="13"  Width="Auto" Background="#00000000" BorderThickness="0" FontFamily="Bahnschrift SemiBold" x:Name="f1ontSize1" Text="18" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" SelectionBrush="#FF8BC8C8" TextChanged="FontSize_TextChanged"/>
+                    </Border>
+                    
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="smallFont" Click="SmallF">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Decrease Font Size" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E7;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="LargeFont" Click="BigF">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Increase Font Size" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E8;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="LowerSelect" Click="LowerSelectF">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Lower Selected" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Grid>
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE896;" Foreground="White" FontSize="15"/>
+                        </Grid>
+                    </Button>
+
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="UpperSelect" Click="UpperSelectF">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Upper Selected" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Grid>
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE898;" Foreground="White" FontSize="15"/>
+                        </Grid>
+                    </Button>
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+                    <Button  ToolTipService.InitialShowDelay="0" Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="FontB" Click="FontB_Click">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Font" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE8D2;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="ColorB" Click="ColorB_Click">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Color" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE8D3;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="undob" Click="Undobb">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Undo" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="redob" Click="Redobb">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Redo" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;" Foreground="White" FontSize="15"/>
+                    </Button>
+
+
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="CutButton" Click="CutB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Cut" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE8C6;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+
+                    <Button ToolTipService.InitialShowDelay="0"   Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="CopyButton" Click="CopyB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Copy" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE8C8;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="PasteButton" Click="PasteB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Paste" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE77F;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+
+                    <Border Height="15" Width="1" Background="#555555" SnapsToDevicePixels="True"/>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" Visibility="Visible" x:Name="Find" Click="FindB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Find/Replace" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+
+
+
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="Print" Click="PrintB">
+
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Print" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Text="&#xE749;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+
+                    </Button>
+
+
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="Wrap" Click="WrapB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Toggle Text Wrap" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Margin="0,0,0,0" Text="&#xE8E4;" FontFamily="Segoe MDL2 Assets" Foreground="LightBlue" FontSize="15" x:Name="wraptext"/>
+                    </Button>
+
+                    <Button ToolTipService.InitialShowDelay="0"  Width="30" Height="30" Margin="2,2,2,2" Style="{StaticResource ButtonMain}" x:Name="SpellToggle" Click="SpellTB">
+                        <Button.ToolTip>
+                            <ToolTip Background="Black">
+                                <Grid>
+                                    <TextBlock Text="Toggle Spell-Check" Foreground="White"/>
+                                </Grid>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <TextBlock Margin="0,0,0,0" Text="&#xF87B;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15" x:Name="spellb"/>
+                    </Button>
+
+
+                </StackPanel>
+
+
+            </StackPanel>
+
+            <Grid Margin="0,84,0,0" Height="1" Background="#202020" VerticalAlignment="Top"/>
+
+            <Border Width="250" Height="80" CornerRadius="5" Margin="0,90,30,0" VerticalAlignment="Top" BorderBrush="#202020" BorderThickness="1" HorizontalAlignment="Right" Visibility="Hidden" Background="Black">
+                <Border.Effect>
+                    <DropShadowEffect Opacity=".2"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid Height="25" VerticalAlignment="Top" Margin="0,8,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="215*"/>
+                            <ColumnDefinition Width="33*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Find in text:" Foreground="White" FontSize="17" VerticalAlignment="Top" Margin="8,0,5,0" FontFamily="Bahnschrift" Grid.ColumnSpan="2"/>
+                        <TextBox Text="keyword" Background="Black" Name="findTxt" TextChanged="TextBox_TextChanged" Margin="100,2,8,0" VerticalAlignment="Top" FontSize="15" BorderThickness="0" Foreground="White" FontFamily="Bahnschrift Light" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Button Name="searchBack" Click="searchBack_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="30" Width="30" Style="{StaticResource ButtonMain2}">
+                        <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+                    <Button Name="searchForward" Click="searchForward_Click" HorizontalAlignment="Left" Margin="40,0,0,5" VerticalAlignment="Bottom" Height="30" Width="30" Style="{StaticResource ButtonMain2}">
+                        <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="15"/>
+                    </Button>
+                    <TextBlock Name="resultTxtS" VerticalAlignment="Bottom" Margin="80,0,10,10" Foreground="White" FontFamily="Bahnschrift" FontSize="15" Text="Result x of y">
+
+                    </TextBlock>
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+    </Border>
+
+
+</Window>
