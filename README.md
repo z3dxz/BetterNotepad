@@ -1,1 +1,3 @@
 # BetterNotepad
+
+A better notepad
